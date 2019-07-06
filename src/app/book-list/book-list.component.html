@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Лист Книг</h1>
+    <a routerLink="/register-book" class="btn btn-outline-success" *ngIf="hideWhenNoBook"><i class="fas fa-plus custom-fa-plus"></i>Добавить Книгу</a>
+</div>
+<div class="pricing-header mx-auto">
+<div class="no-data text-center" *ngIf="preLoader">
+</div>
+<div class="no-data text-center" *ngIf="noData">
+    <p class="nodata-msg">Список пуст. Книги еще не добавлены!</p>
+    <a routerLink="/register-book" class="btn btn-outline-success"><i class="fas fa-plus custom-fa-plus"></i>Добавить Книгу</a>
+</div>
+<div class="row" *ngIf="hideWhenNoBook">
+    <div class="col-sm-6 mb-3" *ngFor="let book of Book | paginate: { itemsPerPage: 5, currentPage: p }; let i = index;">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ID Книги: {{book.$key}}</h5>
+                <h5 class="card-title">Название Книги: {{book.bookName}}</h5>
+                <h5 class="card-title">Автор: {{book.authorFirstName}} {{book.authorLastName}}</h5>
+                <h5 class="card-title">ISSN Номер: {{book.issnNumber}}</h5>
+                <p class="card-text">Описание Книги: {{book.bookDescription}}</p>
+                <i class="far fa-edit" routerLink="/edit-book/{{book.$key}}"></i>
+                <i class="far fa-trash-alt" (click)="deleteBook(book)"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<pagination-controls (pageChange)="p = $event" autoHide="true" responsive="true"></pagination-controls>
+</div>
